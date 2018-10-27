@@ -11,6 +11,7 @@ import ARKit
 import UIKit
 import Darwin
 
+/// The `UIViewController` that manages displaying the VR content on the device
 class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDelegate {
     
     @IBOutlet var vrView: UIView!
@@ -18,6 +19,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
     let session = ARSession()
     private var arDelegate: ARSeparateDelegateClass!
     
+    /// The `VRScene`s that can be displayed in VR
     var scenes: [String:VRScene] = [:] {
         
         didSet {
@@ -54,6 +56,8 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
     }
     
     private var mainScene = SCNScene()
+    
+    /// The main scene that contains all of the `VRScene`s in  the `scenes` variable
     var scene: SCNScene {
         
         return mainScene
@@ -66,24 +70,25 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
     
     private var sizeConstraints: [String: CGFloat]!
     
+    /// The `ARSSCNView` that the `VRViewController` retrieves world tracking data from
     let ARView = ARSCNView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     
     private var _mainCameraNode = SCNNode()
+    
+    /// The main camera, use this node to determine the position of the user in the world
     var mainCameraNode: SCNNode {
         
-        get {
-            
-            return _mainCameraNode
-            
-        }
+        return _mainCameraNode
         
     }
     
+    /// The origin of the world that the `mainCameraNode` is attached to, when `clampSceneToFloor` is `true` avoid changing the y position of this node
     var mainPointOfView = SCNNode()
     
     private var tooFarFromOriginNode = SCNNode()
     
-    var multiplier: Float = 39.37 {
+    /// Determines the size of one unit in 3D scene files, calculated by one meter divided by this number ex. `multiplier = 100` makes one unit equal to one centemeter in real world space while `multiplier = 1` (default) makes one unit equal to one meter
+    var multiplier: Float = 1 {
         
         didSet {
             
@@ -97,25 +102,27 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
     }
     
-    enum systemOfMeasurment {
+    /// Determines the size of one unit in 3D scene files
+    ///
+    /// - meters: One unit equals one meter in real world space
+    /// - inches: One unit equals one inch in real world space
+    /// - other: this should not be set except by the `multiplier` variable's `didSet`
+    enum systemOfMeasurment: Float {
         
-        case meters
-        case inches
-        case other
+        case meters = 1
+        case inches = 39.37
+        case other = 0
         
     }
     
+    /// Determines the size of one unit in 3D scene files ex. `measurmentType = .inches` makes one unit equal to one inch in real world space
     var measurmentType: systemOfMeasurment = .meters {
         
         willSet {
             
-            if newValue == .inches {
+            if newValue.rawValue != 0 {
                 
-                multiplier = 39.37
-                
-            } else if newValue == .meters {
-                
-                multiplier = 1
+                multiplier = newValue.rawValue
                 
             }
             
@@ -160,6 +167,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
     }
     
+    /// Controls wether or not the user can interact with the scene, user interacts by tapping on the screen
     var interactive: Bool = false {
         
         didSet {
@@ -223,8 +231,15 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
     }
     
+    /// The `VRObject` that the user is currently holding
     var holdingObject: VRObject?
     
+    
+    /// This function gets called whenever the user taps on the screen
+    ///
+    /// - Parameters:
+    ///   - object: The object that the user is currently looking at
+    ///   - position: The point in the currently displayed `VRScene` that the user is looking at
     func userTapped(lookingAt object: VRObject, lookingAt position: SCNVector3) {
         
         if holdingObject == nil && object.type != .static {
@@ -259,8 +274,10 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
     }
     
+    /// Set this value to true if you would like to overlay the virtual scene over the real world
     var ARMode: Bool = false
     
+    /// Set this value to true if you would like the bottom of the scene to be automatically placed on the ground
     var clampSceneToFloor: Bool = false {
         
         didSet {
@@ -729,18 +746,22 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
     }
     
+    
+    /// Use this function to display one of the `VRScene`s in the `scenes` array
+    ///
+    /// - Parameter named: The key that points to the `VRScene` in the `scenes` array that you would like to display
     func displayScene(_ named: String) {
-        
-        currentLookAtObject?.setHighlighted(to: false)
-        
-        currentLookAtObject = nil
-        currentLookAtPoint = nil
         
         guard let newScene = scenes[named] else {
             
             return
             
         }
+        
+        currentLookAtObject?.setHighlighted(to: false)
+        
+        currentLookAtObject = nil
+        currentLookAtPoint = nil
         
         for sceneData in scenes {
             
