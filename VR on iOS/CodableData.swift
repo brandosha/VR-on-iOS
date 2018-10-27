@@ -124,8 +124,6 @@ extension TapAction: DataCodable {
             
         }
         
-        let stringArr: [String] = [lookingAtObject.name ?? "nil", holdingString, "\(type)"]
-        
         let string = "\(lookingAtObject.name ?? "nil"), \(holdingString), \(type)"
         
         if let data = string.data(using: .utf8) {
@@ -134,19 +132,11 @@ extension TapAction: DataCodable {
             
         }
         
-        return "0".data(using: .utf8)! //stringArr.withUnsafeBufferPointer({ Data(buffer: $0) })
+        return "0".data(using: .utf8)!
         
     }
     
     init?(_ data: Data, scene: SCNScene) {
-        
-        /*
-         let dataStrings: [String] = data.withUnsafeBytes {(_ pointer: UnsafePointer<String>) -> [String] in
-         
-         [String](UnsafeBufferPointer(start: pointer, count: data.count/MemoryLayout<String>.stride))
-         
-         }
-         */
         
         let bytes: [UInt8] = data.withUnsafeBytes {(_ pointer: UnsafePointer<UInt8>) -> [UInt8] in
             
@@ -170,12 +160,9 @@ extension TapAction: DataCodable {
         
         if dataStrings[0] == "nil" {
             
-            //  print("Look at object does not have a name")
             return nil
             
         }
-        
-        //  print("\(data)")
         
         guard let lookingAtObject = scene.rootNode.childNode(withName: dataStrings[0], recursively: true) else {
             

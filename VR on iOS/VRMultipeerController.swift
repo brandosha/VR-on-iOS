@@ -13,7 +13,7 @@ import ARKit
 class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
     // Unique identifier for connecting with other players
-    static let serviceType = "vr-escape"
+    static let serviceType = "my-vr-app"
     
     private var myPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var mcSession: MCSession!
@@ -46,11 +46,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         
-        //  print("recieved invitation from peer: \(peerID) with context: \(context)")
-        
         if !connected || mcSession.connectedPeers.isEmpty {
-            
-            //  print("accepting invitiation from peer: \(peerID.displayName)")
             
             if let context = context {
                 
@@ -75,8 +71,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
         
         browser.invitePeer(peerID, to: mcSession, withContext: context, timeout: 10)
         
-        //  print("found peer: \(peerID) with discovery info: \(info)")
-        
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -90,8 +84,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         
         if state == .connected && peerID != myPeerID && !connected {
-            
-            //  print("\(peerID.displayName) accepted invitation")
             
             do {
                 
@@ -143,26 +135,18 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                 
             }
             else if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
+                
                 // Add anchor to the session, ARSCNView delegate adds visible content.
                 ARView.session.add(anchor: anchor)
-                
                 sentRecievedMap = true
                 
                 return
                 
             }
-            else {
-                //  print("unknown data recieved from \(peerID.displayName)")
-            }
-        } catch {
             
-            //  print("can't decode map data recieved from \(peerID.displayName)")
-            
-        }
+        } catch { }
         
         if let location = PlayerLocation(data) {
-            
-            //  print("Recieved location data, \(location) from \(peerID.displayName)")
             
             if let peerNode = peerNodes[peerID.displayName] {
                 
@@ -198,8 +182,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                 }
                 
             } else {
-                
-                //  print("adding cube to \(peerID.displayName)")
                 
                 let cube = SCNBox(width: CGFloat(0.2 * multiplier), height: CGFloat(0.2 * multiplier), length: CGFloat(0.2 * multiplier), chamferRadius: 0)
                 
@@ -240,8 +222,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
         
         if let action = TapAction(data, scene: scene) {
             
-            //  print("Recieved action data from \(peerID.displayName)")
-            
             switch action.type {
                 
             case .taken, .replaced:
@@ -258,10 +238,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                 }
                 
             }
-            
-        } else {
-            
-            //  print("Unable to decode action data")
             
         }
         
@@ -346,7 +322,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                 
             } catch {
                 
-                //  print("Unable to send location data to peers")
+                // Unable to send location data to peers
                 
             }
             
@@ -360,8 +336,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             if previousMappingStatus != .notAvailable {
                 
-                //  print("no world map available")
-                
                 previousMappingStatus = .notAvailable
                 
             }
@@ -369,8 +343,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
         case .extending:
             
             if previousMappingStatus != .extending {
-                
-                //  print("begun tracking world map")
                 
                 previousMappingStatus = .extending
                 
@@ -380,8 +352,6 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             if previousMappingStatus != .mapped {
                 
-                //  print("ready to send world map")
-                
                 previousMappingStatus = .mapped
                 
             }
@@ -390,7 +360,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                 
                 guard let map = worldMap else {
                     
-                    //  print("Error: \(error!.localizedDescription)")
+                    print("Error getting world map: \(error!.localizedDescription)")
                     return
                     
                 }
@@ -418,13 +388,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             let taken = object.take()
             
-            if !taken {
-                
-                //  print("Could not take")
-                
-            } else {
-                
-                //  print("Taken successfully")
+            if taken {
                 
                 holdingObject = object
                 
@@ -437,13 +401,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             let replaced = object.replace()
             
-            if !replaced {
-                
-                //  print("Could not replace")
-                
-            } else {
-                
-                //  print("Replaced successfully")
+            if replaced {
                 
                 holdingObject = nil
                 
@@ -456,13 +414,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             let used = holdingObject!.use(on: object)
             
-            if !used {
-                
-                //  print("Could not use")
-                
-            } else {
-                
-                //  print("Used successfully")
+            if used {
                 
                 successful = true
                 type = .used
@@ -473,13 +425,7 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             let used = object.use(on: object)
             
-            if !used {
-                
-                //  print("Could not use")
-                
-            } else {
-                
-                //  print("Used successfully")
+            if used {
                 
                 successful = true
                 type = .used
@@ -494,12 +440,11 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
             
             do {
                 
-                //  print("Sending action data to peers")
                 try mcSession.send(tapAction.asData, toPeers: mcSession.connectedPeers, with: .reliable)
                 
             } catch {
                 
-                //  print("Unable to send action data to peers")
+                // Unable to send action data to peers
                 
             }
             

@@ -26,17 +26,14 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
                 if mainScene.rootNode.childNode(withName: data.key, recursively: false) != nil {
                     
-                    // print("\(data.key) already set up")
-                    
                     continue
                     
                 } else {
                     
-                    let newSceneRoot = data.value.rootNode //data.value.scene.rootNode
+                    let newSceneRoot = data.value.rootNode
                     
                     for sceneNode in data.value.scene.rootNode.childNodes {
                         
-                        // print("adding \(sceneNode) from \(data.key)")
                         newSceneRoot.addChildNode(sceneNode)
                         
                     }
@@ -122,7 +119,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
             }
             
-            let tooFarFromOriginTube = SCNCylinder(radius: CGFloat(1 * multiplier), height: CGFloat(5 * multiplier)) // SCNTube(innerRadius: CGFloat(0.8 * multiplier), outerRadius: CGFloat(0.9 * multiplier), height: CGFloat(5 * multiplier))
+            let tooFarFromOriginTube = SCNCylinder(radius: CGFloat(1 * multiplier), height: CGFloat(5 * multiplier))
             tooFarFromOriginTube.firstMaterial?.diffuse.contents = #colorLiteral(red: 0.925490200519562, green: 0.235294118523598, blue: 0.10196078568697, alpha: 1.0)
             tooFarFromOriginTube.firstMaterial?.isDoubleSided = true
             
@@ -222,8 +219,6 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             
         }
         
-        //  print("tapped...")
-        
         userTapped(lookingAt: userNode, lookingAt: userPos)
         
     }
@@ -236,13 +231,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             
             let taken = object.take()
             
-            if !taken {
-                
-                //  print("Could not take")
-                
-            } else {
-                
-                //  print("Taken successfully")
+            if taken {
                 
                 holdingObject = object
                 
@@ -254,43 +243,17 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             
             if !replaced {
                 
-                //  print("Could not replace")
-                
-            } else {
-                
-                //  print("Replaced successfully")
-                
                 holdingObject = nil
                 
             }
             
         } else if holdingObject != nil {
             
-            let used = holdingObject!.use(on: object)
-            
-            if !used {
-                
-                //  print("Could not use")
-                
-            } else {
-                
-                //  print("Used successfully")
-                
-            }
+            _ = holdingObject!.use(on: object)
             
         } else {
             
-            let used = object.use(on: object)
-            
-            if !used {
-                
-                //  print("Could not use")
-                
-            } else {
-                
-                //  print("Used successfully")
-                
-            }
+            _ = object.use(on: object)
             
         }
         
@@ -390,8 +353,6 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         arDelegate = ARSeparateDelegateClass(self)
         ARView.delegate = arDelegate
         
-        // ARView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        
         self.view = vrView
         
         self.view.addSubview(sceneViewL)
@@ -403,6 +364,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         sceneViewL.preferredFramesPerSecond = 60
         sceneViewR.preferredFramesPerSecond = 60
         
+        // ARView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         // sceneViewL.showsStatistics = true
         // sceneViewR.showsStatistics = true
         
@@ -474,17 +436,9 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
         
         if let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) {
             
-            //  print("\n\n\n\nSUCCESS! Reference images found! data: \(referenceImages)\n\n\n\n")
-            
             config.detectionImages = referenceImages
             
-        } else {
-            
-            //  print("\n\n\n\nERROR! No reference images found!\n\n\n\n")
-            
         }
-        
-        
         
         return config
         
@@ -588,16 +542,13 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
                 referenceImageAnchor = imageAnchor
                 
-                //  print("Detected image!")
-                
                 let referenceImage = imageAnchor.referenceImage
                 
-                let plane = SCNSphere(radius: (referenceImage.physicalSize.width / 2) * CGFloat(multiplier))
-                plane.firstMaterial?.diffuse.contents = UIColor.red
-                plane.firstMaterial?.isDoubleSided = true
+                let sphere = SCNSphere(radius: (referenceImage.physicalSize.width / 2) * CGFloat(multiplier))
+                sphere.firstMaterial?.diffuse.contents = UIColor.red
+                sphere.firstMaterial?.isDoubleSided = true
                 
-                imageNode = SCNNode(geometry: plane)
-                // imageNode = SCNScene(named: "art.scnassets/hand.scn")?.rootNode.childNode(withName: "Hand", recursively: true)
+                imageNode = SCNNode(geometry: sphere)
                 imageNode.opacity = 1
                 imageNode.name = "image_node"
                 
@@ -609,11 +560,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
                 let pos = anchor.transform.columns.3
                 
-                //  print("image position = \(pos)")
-                
                 imageNode.position = SCNVector3(pos.x * multiplier, pos.y * multiplier, pos.z * multiplier)
-                
-                //  print("image node position = \(imageNode.position)\nimage node world position = \(imageNode.worldPosition)\nanchor node position = \(ARView.node(for: anchor)?.position)")
                 
                 imageNode.scale = SCNVector3(multiplier, multiplier, multiplier)
                 
@@ -621,11 +568,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
             }
             
-            //  print("added anchor: \(anchor)")
-            
             if !clampSceneToFloor {
-                
-                //  print("Aborting...");
                 
                 return
                 
@@ -647,15 +590,11 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             
             let floorYPos = anchor.transform.columns.3.y
             
-            //  print("Plane detected at \(floorYPos)")
-            
             if floorYPos < currentFloorYPos {
                 
                 mainPointOfView.position.y = -floorYPos * multiplier
                 
                 floorPlaneAnchor = planeAnchor
-                
-                //  print("Snapping scene to ground")
                 
             }
             
@@ -683,16 +622,11 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             (node.position.z) * multiplier
         )
         
-        //  print("anchor node position = \(node.position)")
-        //  print("anchor position = \(anchor.transform.columns.3)")
-        
         imageNode.position = imagePos
         
         imageNode.eulerAngles.x = node.eulerAngles.x
         imageNode.eulerAngles.y = node.eulerAngles.y
         imageNode.eulerAngles.z = node.eulerAngles.z
-        
-        //  print("position = \(imagePos)\nrotation = \(imageNode.eulerAngles)")
         
     }
     
@@ -702,15 +636,11 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
             
             if anchor === floorPlaneAnchor && clampSceneToFloor {
                 
-                //  print("Floor plane anchor updated")
-                
                 let newFloorYPos = anchor.transform.columns.3.y
                 
                 mainPointOfView.position.y = -newFloorYPos * multiplier
                 
             }
-            
-            //  print("updated anchor: \(anchor)")
             
         }
         
@@ -732,7 +662,7 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
                     
-                    //  print("Settings opened: \(success)") // Prints true
+                    //  print("Settings opened: \(success)")
                     
                 })
             }
@@ -820,23 +750,9 @@ class VRViewController: UIViewController, ARSessionDelegate, SCNSceneRendererDel
                 
             } else {
                 
-                // print("displaying scene \(sceneData.key)")
-                
                 newScene.switchSceneSetup()
                 
                 sceneData.value.rootNode.isHidden = false
-                
-                /*
-                 let lightingEnvironment: Any = scene.lightingEnvironment.contents as? String ?? UIColor.clear
-                 mainScene.lightingEnvironment.contents = lightingEnvironment
-                 
-                 if !ARMode {
-                 
-                 let background: Any = scene.background.contents as? String ?? UIColor.white
-                 mainScene.background.contents = background
-                 
-                 }
-                 */
                 
             }
             
