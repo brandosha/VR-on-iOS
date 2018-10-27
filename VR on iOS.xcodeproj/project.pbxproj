@@ -10,7 +10,6 @@
 		CA52B0BB2184DC6200514CCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA52B0BA2184DC6200514CCA /* AppDelegate.swift */; };
 		CA52B0BD2184DC6200514CCA /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = CA52B0BC2184DC6200514CCA /* art.scnassets */; };
 		CA52B0BF2184DC6200514CCA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA52B0BE2184DC6200514CCA /* MainViewController.swift */; };
-		CA52B0C22184DC6200514CCA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA52B0C02184DC6200514CCA /* Main.storyboard */; };
 		CA52B0C42184DC6500514CCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA52B0C32184DC6500514CCA /* Assets.xcassets */; };
 		CA52B0C72184DC6500514CCA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA52B0C52184DC6500514CCA /* LaunchScreen.storyboard */; };
 		CA6BF4A32184E0FA0090FF7F /* VRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4A22184E0FA0090FF7F /* VRViewController.swift */; };
@@ -21,6 +20,10 @@
 		CA6BF4AF2184E18D0090FF7F /* NodeTechnique.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA6BF4AE2184E18D0090FF7F /* NodeTechnique.plist */; };
 		CA6BF4B22184E1F00090FF7F /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4B12184E1F00090FF7F /* MainScene.swift */; };
 		CA6BF4B42184E2310090FF7F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4B32184E2310090FF7F /* Extensions.swift */; };
+		CA6BF4B62184E6ED0090FF7F /* VRMultipeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4B52184E6ED0090FF7F /* VRMultipeerController.swift */; };
+		CA6BF4B82184E7070090FF7F /* CodableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4B72184E7070090FF7F /* CodableData.swift */; };
+		CA6BF4BA2184E7290090FF7F /* MultiplayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6BF4B92184E7290090FF7F /* MultiplayerViewController.swift */; };
+		CA6BF4BC2184E7870090FF7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA6BF4BB2184E7870090FF7F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +31,6 @@
 		CA52B0BA2184DC6200514CCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA52B0BC2184DC6200514CCA /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		CA52B0BE2184DC6200514CCA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		CA52B0C12184DC6200514CCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA52B0C32184DC6500514CCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA52B0C62184DC6500514CCA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA52B0C82184DC6500514CCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -40,6 +42,10 @@
 		CA6BF4AE2184E18D0090FF7F /* NodeTechnique.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NodeTechnique.plist; sourceTree = "<group>"; };
 		CA6BF4B12184E1F00090FF7F /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		CA6BF4B32184E2310090FF7F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		CA6BF4B52184E6ED0090FF7F /* VRMultipeerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRMultipeerController.swift; sourceTree = "<group>"; };
+		CA6BF4B72184E7070090FF7F /* CodableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodableData.swift; sourceTree = "<group>"; };
+		CA6BF4B92184E7290090FF7F /* MultiplayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplayerViewController.swift; sourceTree = "<group>"; };
+		CA6BF4BB2184E7870090FF7F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,13 +82,15 @@
 				CA52B0BC2184DC6200514CCA /* art.scnassets */,
 				CA6BF4B32184E2310090FF7F /* Extensions.swift */,
 				CA6BF4A82184E15F0090FF7F /* ARSeparateDelegateClass.swift */,
+				CA6BF4B52184E6ED0090FF7F /* VRMultipeerController.swift */,
+				CA6BF4B72184E7070090FF7F /* CodableData.swift */,
 				CA6BF4A22184E0FA0090FF7F /* VRViewController.swift */,
 				CA6BF4A62184E11E0090FF7F /* VRScene.swift */,
 				CA6BF4AA2184E1740090FF7F /* VRObject.swift */,
 				CA6BF4AC2184E1860090FF7F /* NodeOutlineWhite.metal */,
 				CA6BF4AE2184E18D0090FF7F /* NodeTechnique.plist */,
 				CA6BF4B02184E1DD0090FF7F /* Main */,
-				CA52B0C02184DC6200514CCA /* Main.storyboard */,
+				CA6BF4BB2184E7870090FF7F /* Main.storyboard */,
 				CA52B0C32184DC6500514CCA /* Assets.xcassets */,
 				CA52B0C52184DC6500514CCA /* LaunchScreen.storyboard */,
 				CA52B0C82184DC6500514CCA /* Info.plist */,
@@ -94,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				CA52B0BE2184DC6200514CCA /* MainViewController.swift */,
+				CA6BF4B92184E7290090FF7F /* MultiplayerViewController.swift */,
 				CA6BF4B12184E1F00090FF7F /* MainScene.swift */,
 			);
 			path = Main;
@@ -160,8 +169,8 @@
 				CA6BF4AF2184E18D0090FF7F /* NodeTechnique.plist in Resources */,
 				CA52B0BD2184DC6200514CCA /* art.scnassets in Resources */,
 				CA52B0C72184DC6500514CCA /* LaunchScreen.storyboard in Resources */,
+				CA6BF4BC2184E7870090FF7F /* Main.storyboard in Resources */,
 				CA52B0C42184DC6500514CCA /* Assets.xcassets in Resources */,
-				CA52B0C22184DC6200514CCA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,12 +182,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA6BF4AB2184E1740090FF7F /* VRObject.swift in Sources */,
+				CA6BF4BA2184E7290090FF7F /* MultiplayerViewController.swift in Sources */,
 				CA6BF4B42184E2310090FF7F /* Extensions.swift in Sources */,
 				CA6BF4A72184E11F0090FF7F /* VRScene.swift in Sources */,
 				CA52B0BF2184DC6200514CCA /* MainViewController.swift in Sources */,
+				CA6BF4B82184E7070090FF7F /* CodableData.swift in Sources */,
 				CA52B0BB2184DC6200514CCA /* AppDelegate.swift in Sources */,
 				CA6BF4A92184E15F0090FF7F /* ARSeparateDelegateClass.swift in Sources */,
 				CA6BF4B22184E1F00090FF7F /* MainScene.swift in Sources */,
+				CA6BF4B62184E6ED0090FF7F /* VRMultipeerController.swift in Sources */,
 				CA6BF4AD2184E1860090FF7F /* NodeOutlineWhite.metal in Sources */,
 				CA6BF4A32184E0FA0090FF7F /* VRViewController.swift in Sources */,
 			);
@@ -187,14 +199,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CA52B0C02184DC6200514CCA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CA52B0C12184DC6200514CCA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CA52B0C52184DC6500514CCA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

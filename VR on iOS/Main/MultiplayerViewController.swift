@@ -1,14 +1,15 @@
 //
-//  MainViewController.swift
+//  MultiplayerViewController.swift
 //  VR on iOS
 //
-//  Created by Brandon on 9/3/18.
+//  Created by Emily on 9/15/18.
 //  Copyright © 2018 Brandon. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
-class MainViewController: VRViewController {
+class MultiplayerViewController: VRMultipeerController {
     
     override func loadView() {
         

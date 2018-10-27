@@ -12,6 +12,7 @@ import SceneKit
 class MainScene: VRScene {
     
     var scene: SCNScene = SCNScene(named: "art.scnassets/ship.scn")!
+    var rootNode: SCNNode = SCNNode()
     
     required init(_ current: VRViewController) {
         
@@ -19,7 +20,7 @@ class MainScene: VRScene {
     
     func setup() {
         
-        var ship = scene.rootNode.childNode(withName: "shipMesh", recursively: true)!
+        var ship = rootNode.childNode(withName: "shipMesh", recursively: true)!
         ship = VRObject(ship, type: .static)
         
         func highlight(object: VRObject) -> Bool {

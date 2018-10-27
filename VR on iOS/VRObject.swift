@@ -212,4 +212,21 @@ class VRObject: SCNNode {
         
     }
     
+    // for multipeer games
+    func toggleHidden() {
+        
+        if super.opacity != actualOpacity {
+            
+            super.opacity = actualOpacity
+            castsShadow = true
+            
+        } else {
+            
+            castsShadow = false
+            super.opacity = 0.001
+            
+        }
+        
+    }
+    
 }

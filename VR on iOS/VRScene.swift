@@ -14,6 +14,9 @@ protocol VRScene {
     /// The scene that diplays the value
     var scene: SCNScene { get set }
     
+    /// The root node that is added to the VRController's scene
+    var rootNode: SCNNode { get set }
+    
     /// Use current to allow your scene to access other varibles within the same view controller
     /// :param: current: the view controller that you are initializing the scene in
     init(_ current: VRViewController)

@@ -21,24 +21,9 @@ class ARSeparateDelegateClass: NSObject, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        // print("updating... \(time)")
-        
         if current.ARMode {
             
-            if let originalImage = current.session.currentFrame?.capturedImage {
-                
-                let ciImage = CIImage(cvImageBuffer: originalImage)
-                if let cgImage = CIContext().createCGImage(ciImage, from: CGRect(x: 0, y: 0, width: 1080, height: 1080)) {
-                    
-                    current.scene.background.contents = cgImage
-                    
-                } else {
-                    
-                    print("no background image")
-                    
-                }
-                
-            }
+            current.scene.background.contents = current.ARView.scene.background.contents
             
         }
         
