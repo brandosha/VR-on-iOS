@@ -12,7 +12,7 @@ import ARKit
 
 class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    // Unique identifier for connecting with other players
+    /// Unique identifier for connecting with other users
     static let serviceType = "my-vr-app"
     
     private var myPeerID = MCPeerID(displayName: UIDevice.current.name)
@@ -198,16 +198,10 @@ class VRMultipeerController: VRViewController, MCSessionDelegate, MCNearbyServic
                     
                 }
                 
-                let actualPos = SCNVector3(
-                    location.position.x * multiplier,
-                    location.position.y * multiplier,
-                    location.position.z * multiplier
-                )
-                
-                let float3Pos = float3(actualPos.x, actualPos.y, actualPos.z)
+                let float3Pos = float3(location.position.x, location.position.y, location.position.z)
                 recentPeerPositions[peerID.displayName] = [float3Pos]
                 
-                peerNode.position = actualPos
+                peerNode.position = location.position
                 peerNode.eulerAngles = location.rotation
                 
                 peerNodes[peerID.displayName] = peerNode
